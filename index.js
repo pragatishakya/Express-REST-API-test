@@ -35,6 +35,7 @@ app.get("/showUser/:uid",(request,response)=>{
     user.length!==0 ? response.status(200).json(user) : response.status(200).json({message:"User not found"})
 })
 
+//To add a new user
 app.post('/addUser/',(req,res)=>{
     // const name= req.body.name
     // const email= req.body.email
@@ -44,6 +45,17 @@ app.post('/addUser/',(req,res)=>{
     res.status(200).json(members)
 })
 
+//To delete a user
+app.delete("/deleteUser/:uid",(req,res)=>{
+    const id=parseInt(req.params.uid)
+    const found= members.some(member=> member.id===id)
+    if(found){
+        const results= members.filter(member=> member.id !==id)
+        res.status(200).json(results)
+    }else{
+        res.status(400).json({message:"User not found"})
+    }
+})
 const PORT=3000
 app.listen(PORT,()=>console.log(`Server is running ar ${PORT}`))
 
